@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+          - kdenetwork-filesharing
+          - kdeplasma-addons
+          - plasma-nm-openvpn
+          - plasma-nm-openconnect
+          - plasma-vault
+          - plasma-disks
+          - pinentry-qt
+          - pam-kwallet
+          - signon-kwallet-extension
+          - polkit-kde
+          - kdegraphics-thumbnailers
+          - switcheroo-control

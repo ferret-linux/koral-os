@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+ - type: files
+   files:
+     - source: base-files
+       destination: /
+
+     - source: kde-settings
+       destination: /
+
+ - type: script
+   snippets:
+      - |
+        systemctl enable plasmalogin.service
+        systemctl enable switcheroo-control.service

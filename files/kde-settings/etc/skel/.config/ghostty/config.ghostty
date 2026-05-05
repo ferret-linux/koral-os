@@ -1,0 +1,37 @@
+# ── window ───────────────────────────────
+title = Ghostty Terminal
+window-decoration = client
+window-padding-x = 15
+window-padding-y = 10
+window-padding-balance = true
+
+# ── font ─────────────────────────────────
+font-family = Hack Nerd Font Mono
+font-size = 14
+
+# ── cursor ───────────────────────────────
+cursor-style = underline
+cursor-style-blink = false
+custom-shader = shader/animated_cursor.glsl
+
+# ── Theming ───────────────────────────────
+theme = light:zayu_light,dark:zayu_dark
+palette-generate = true
+window-theme = ghostty
+gtk-toolbar-style = raised-border
+gtk-titlebar-style = native
+gtk-tabs-location = bottom
+gtk-wide-tabs = true
+
+# ── working directory ────────────────────
+working-directory = inherit
+window-inherit-working-directory = true
+tab-inherit-working-directory = true
+
+# ── misc ─────────────────────────────────
+scrollbar = system
+scrollback-limit = 10000
+mouse-hide-while-typing = true
+shell-integration-features = no-cursor
+clipboard-read = allow
+window-vsync = false

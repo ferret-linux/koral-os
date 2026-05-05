@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/<name>
+
+####################
+#### Image Info ####
+####################
+name: koral-os
+description: KoralOS image for Mesa GPUS
+base-image: ghcr.io/ferret-project/mink-os
+image-version: latest
+platforms:
+  - linux/amd64
+#################
+#### MODULES ####
+#################
+modules:
+## Import Modules/Scripts ##
+  - from-file: zrun/configure/pre-setup.yml
+
+  - from-file: zrun/install/plasma-base.yml
+  - from-file: zrun/install/plasma-addons.yml
+  - from-file: zrun/install/plasma-extras.yml
+  - from-file: zrun/install/plasma-optionals.yml
+  - from-file: zrun/install/plasma-apps.yml
+  - from-file: zrun/install/plasma-input.yml
+
+  - from-file: zrun/configure/koral-settings.yml
+  - from-file: zrun/configure/post-setup.yml
+  - from-file: zrun/configure/os-release.yml
+###################
+### END of File ###
+###################

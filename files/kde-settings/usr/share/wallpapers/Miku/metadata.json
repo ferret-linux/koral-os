@@ -1,0 +1,13 @@
+{
+  "KPlugin": {
+    "Id": "Miku",
+    "Name": "Miku",
+    "Description": "Official Zodium Linux wallpapers",
+    "License": "CC-BY-SA-4.0",
+    "Authors": [
+      {
+        "Name": "Zodium Project"
+      }
+    ]
+  }
+}

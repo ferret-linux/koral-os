@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+       - kcm-fcitx5
+       - fcitx5
+       - fcitx5-gtk
+       - fcitx5-qt6
+       - fcitx5-configtool
+       - fcitx5-mozc
+       - fcitx5-chewing
+       - fcitx5-chinese-addons
+       - fcitx5-hangul
+       - fcitx5-unikey
+       - fcitx5-m17n
+       - fcitx5-libthai
+       - fcitx5-table-extra
+       - fcitx5-rime

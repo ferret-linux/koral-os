@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+
+modules:
+  - type: dnf
+    repos:
+      copr:
+        - matinlotfali/KDE-Rounded-Corners
+    install:
+      install-weak-deps: false
+      packages:
+          - kwin-effect-roundcorners
+          - plasma-print-manager
+          - kio-admin
+          - colord-kde
+          - kdnssd
+          - ksshaskpass
+          - ldns
+          - nss-tools
+          - glibc-all-langpacks
+          - flatpak-kcm
+          - kcm-plasma-keyboard
+          - kcm-plasmalogin
+
+  - type: script
+    snippets:
+        - |
+          dnf -y copr disable matinlotfali/KDE-Rounded-Corners
+          rm -rf /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:matinlotfali:KDE-Rounded-Corners.repo
