@@ -128,6 +128,13 @@ dnf5 install -y --setopt=install_weak_deps=False \
 systemctl enable plasmalogin.service
 systemctl enable switcheroo-control.service
 
+### OS Release
+sed -i 's/^NAME=.*/NAME="KoralOS"/' /usr/lib/os-release
+sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="KoralOS Linux"/' /usr/lib/os-release
+
+### Rebuild initramfs
+dracut --no-hostonly --kver "$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}\n' | tail -1)" -f
+
 ### Cleanup
 dnf config-manager setopt ferret-pkgs.enabled=0
 rm -f /etc/yum.repos.d/ferret-pkgs.repo
