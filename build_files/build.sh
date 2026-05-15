@@ -2,6 +2,8 @@
 
 set -ouex pipefail
 
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 SCRIPTS=(
     "pre-reqs.sh"
     "packages.sh"
@@ -17,7 +19,7 @@ for i in "${!SCRIPTS[@]}"; do
 
     echo "  ·  [$NUM/$TOTAL]  $SCRIPT"
 
-    if bash "$SCRIPT"; then
+    if bash "$DIR/$SCRIPT"; then
         echo "     ✓  done"
     else
         echo "     ✗  failed — stopping"
