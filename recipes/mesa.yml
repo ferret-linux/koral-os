@@ -7,7 +7,7 @@
 ####################
 name: koral-os
 description: KoralOS image for Mesa GPUS
-base-image: ghcr.io/ferret-project/mink-os
+base-image: ghcr.io/ferret-linux/mink-os
 image-version: latest
 platforms:
   - linux/amd64
