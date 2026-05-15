@@ -5,7 +5,7 @@ modules:
  - type: script
    snippets:
       - |
-        dnf config-manager addrepo --from-repofile=https://ferret-project.github.io/repo/ferret-pkgs.repo
+        dnf config-manager addrepo --from-repofile=https://ferretlinux.org/repo/ferret-pkgs.repo
         dnf config-manager setopt ferret-pkgs.enabled=1
         dnf config-manager setopt ferret-pkgs.priority=90
         dnf --refresh makecache
