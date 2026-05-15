@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Update System
+Comment=Run system update
+Exec=topgrade
+Icon=system-software-update
+Terminal=true
+Type=Application
+Categories=System;

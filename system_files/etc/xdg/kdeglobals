@@ -1,0 +1,10 @@
+[KDE]
+LookAndFeelPackage=org.zodium.desktop
+
+[General]
+ColorScheme=Zodium
+accentColorFromWallpaper=true
+TerminalApplication=ghostty
+
+[Icons]
+Theme=breeze-dark
