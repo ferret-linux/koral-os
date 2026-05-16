@@ -1,2 +1,4 @@
 [General]
 LogoPath=/usr/share/pixmaps/system-logo-white.png
+Website=https://github.com/ferret-linux/koral-os
+BugReportUrl=https://github.com/ferret-linux/koral-os/issues

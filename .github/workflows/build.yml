@@ -18,7 +18,7 @@ env:
   DEFAULT_TAG: "latest"
   IMAGE_DESC: "KoralOS - A Ferret Linux Desktop"
   IMAGE_KEYWORDS: "bootc,kde,ferret-linux,koral"
-  IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/your-org-id"
+  IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/281760288"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
