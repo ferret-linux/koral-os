@@ -25,6 +25,7 @@ dnf5 install -y --setopt=install_weak_deps=False \
     kscreen \
     kscreenlocker \
     plasma-login-manager \
+    plasma-setup \
     plasma-keyboard
 
 ### Install plasma addons
@@ -117,4 +118,5 @@ dnf5 install -y --setopt=install_weak_deps=False \
 
 ### Enable system services
 systemctl enable plasmalogin.service
+systemctl enable plasma-setup.service
 systemctl enable switcheroo-control.service
