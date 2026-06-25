@@ -88,6 +88,7 @@ dnf5 install -y --setopt=install_weak_deps=False \
     ark \
     spectacle \
     ghostty \
+    code \
     kde-partitionmanager \
     kde-connect \
     plasma-systemsettings \
