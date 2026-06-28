@@ -155,6 +155,7 @@ dnf5 install -y --setopt=install_weak_deps=False \
     kcalc \
     flatseal \
     spectacle \
+    helium-drm \
     pika-backup \
     gnome-firmware \
     input-remapper
