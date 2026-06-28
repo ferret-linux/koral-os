@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: GPL-3.0-only
+#
+# This file is part of the koral-os project:
+#    https://github.com/ferret-linux/koral-os
+# Copyright (C) 2026 Ferret Linux contributors
+
+name: Build KoralOS
+
+on:
+  pull_request:
+  push:
+    paths-ignore:
+      - '**/README.md'
+  schedule:
+    - cron: '05 04 * * *'
+    - cron: '05 16 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule') && 'full-pipeline' || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
+
+
+jobs:
+  build:
+    uses: ./.github/workflows/.build.yml
+    permissions:
+      contents: read
+      packages: write
+
+  rechunk:
+    needs: [build]
+    uses: ./.github/workflows/.rechunk.yml
+    permissions:
+      contents: read
+
+  push:
+    needs: [rechunk]
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    uses: ./.github/workflows/.push.yml
+    permissions:
+      contents: read
+      packages: write
+    secrets:
+      SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+
+  verify:
+    needs: [push]
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    uses: ./.github/workflows/.verify.yml
+    permissions:
+      contents: read
+      packages: read
+
+  rollback:
+    needs: [verify]
+    if: always() && needs.verify.result == 'failure'
+    uses: ./.github/workflows/.rollback.yml
+    permissions:
+      contents: read
+      packages: write
+    secrets: inherit
