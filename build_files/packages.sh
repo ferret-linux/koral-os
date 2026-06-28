@@ -2,120 +2,179 @@
 
 set -ouex pipefail
 
-### Install plasma base
+### Plasma base — xdg
 dnf5 install -y --setopt=install_weak_deps=False \
     xdg-utils \
     xdg-user-dirs \
+    xdg-user-dirs-gtk \
     xdg-desktop-portal \
     xdg-desktop-portal-gtk \
-    xdg-desktop-portal-kde \
+    xdg-desktop-portal-kde
+
+### Plasma base — plasma
+dnf5 install -y --setopt=install_weak_deps=False \
     plasma-nm \
     plasma-pa \
-    plasma-workspace \
+    plasma-setup \
     plasma-desktop \
-    plasma-integration \
+    plasma-keyboard \
+    plasma-workspace \
     plasma-activities \
-    plasma-lookandfeel-fedora \
-    kwayland-integration \
+    plasma-integration \
+    plasma-login-manager \
+    plasma-lookandfeel-fedora
+
+### Plasma base — kde/k
+dnf5 install -y --setopt=install_weak_deps=False \
+    kscreen \
     kunifiedpush \
+    kscreenlocker \
     kde-settings-plasma \
+    kwayland-integration
+
+### Plasma base — misc
+dnf5 install -y --setopt=install_weak_deps=False \
     bluedevil \
     powerdevil \
-    ffmpegthumbs \
-    kscreen \
-    kscreenlocker \
-    plasma-login-manager \
-    plasma-setup \
-    plasma-keyboard
+    ffmpegthumbs
 
-### Install plasma addons
+### Plasma addons — kde
 dnf5 install -y --setopt=install_weak_deps=False \
-    kdenetwork-filesharing \
     kdeplasma-addons \
-    plasma-nm-openvpn \
-    plasma-nm-openconnect \
+    kdenetwork-filesharing \
+    kdegraphics-thumbnailers
+
+### Plasma addons — plasma
+dnf5 install -y --setopt=install_weak_deps=False \
     plasma-vault \
     plasma-disks \
-    pinentry-qt \
-    pam-kwallet \
-    signon-kwallet-extension \
-    polkit-kde \
-    kdegraphics-thumbnailers \
-    switcheroo-control
+    plasma-nm-openvpn \
+    plasma-nm-openconnect
 
-### Install plasma extras (with KDE Rounded Corners)
+### Plasma addons — security/misc
 dnf5 install -y --setopt=install_weak_deps=False \
-    kwin-effect-roundcorners \
-    plasma-print-manager \
-    kio-admin \
-    colord-kde \
-    kdnssd \
-    ksshaskpass \
-    ldns \
-    nss-tools \
-    glibc-all-langpacks \
-    flatpak-kcm \
-    kcm-plasma-keyboard \
-    kcm-plasmalogin
+    kwallet \
+    polkit-kde \
+    pam-kwallet \
+    pinentry-qt \
+    switcheroo-control \
+    signon-kwallet-extension
 
-### Install plasma optionals
+### Plasma extras — kde/k
+dnf5 install -y --setopt=install_weak_deps=False \
+    kio-admin \
+    kcm-plasmalogin \
+    kcm-plasma-keyboard \
+    kwin-effect-roundcorners
+
+### Plasma extras — plasma
+dnf5 install -y --setopt=install_weak_deps=False \
+    plasma-print-manager
+
+### Plasma extras — misc
+dnf5 install -y --setopt=install_weak_deps=False \
+    ldns \
+    kdnssd \
+    nss-tools \
+    colord-kde \
+    flatpak-kcm \
+    ksshaskpass \
+    glibc-all-langpacks
+
+### Plasma optionals — plasma
 dnf5 install -y --setopt=install_weak_deps=False \
     plasma-milou \
-    kio-gdrive \
-    kio-fuse \
-    plasma-browser-integration \
-    plasma-wayland-protocols \
-    plasma-thunderbolt \
-    kde-gtk-config \
-    breeze-gtk-gtk4 \
-    breeze-gtk-gtk3 \
-    plasma-firewall-firewalld \
     plasma-firewall \
-    kf6-baloo-file \
-    qt6-qtimageformats \
-    krfb \
+    plasma-thunderbolt \
+    plasma-wayland-protocols \
+    plasma-firewall-firewalld \
+    plasma-browser-integration
+
+### Plasma optionals — kio
+dnf5 install -y --setopt=install_weak_deps=False \
+    kio-fuse \
+    kio-gdrive
+
+### Plasma optionals — kde-gtk/breeze
+dnf5 install -y --setopt=install_weak_deps=False \
+    kde-gtk-config \
+    breeze-gtk-gtk3 \
+    breeze-gtk-gtk4
+
+### Plasma optionals — remote access
+dnf5 install -y --setopt=install_weak_deps=False \
     krdc \
-    adwaita-fonts-all \
+    krfb \
+    krdp
+
+### Plasma optionals — misc
+dnf5 install -y --setopt=install_weak_deps=False \
     orca \
-    speech-dispatcher \
     espeak-ng \
+    kf6-baloo-file \
+    adwaita-fonts-all \
+    speech-dispatcher \
+    qt6-qtimageformats \
     kde-inotify-survey
 
-### Install plasma apps
+### Ghostty terminal
 dnf5 install -y --setopt=install_weak_deps=False \
-    dolphin \
-    dolphin-plugins \
-    ark \
-    spectacle \
     ghostty \
-    code \
-    kde-partitionmanager \
-    kde-connect \
-    plasma-systemsettings \
-    plasma-systemmonitor \
-    plasma-discover-kns \
-    plasma-discover-notifier \
-    plasma-discover-flatpak \
+    ghostty-kio \
+    ghostty-neovim \
+    ghostty-terminfo \
+    ghostty-bat-syntax \
+    ghostty-zsh-completion \
+    ghostty-shell-integration
+
+### Plasma apps — plasma
+dnf5 install -y --setopt=install_weak_deps=False \
     plasma-discover \
+    plasma-discover-kns \
+    plasma-systemmonitor \
+    plasma-systemsettings \
+    plasma-discover-flatpak \
+    plasma-discover-notifier
+
+### Plasma apps — kde
+dnf5 install -y --setopt=install_weak_deps=False \
+    kde-connect \
     kinfocenter \
+    kde-partitionmanager
+
+### Plasma apps — dolphin
+dnf5 install -y --setopt=install_weak_deps=False \
+    ark \
+    dolphin \
+    dolphin-plugins
+
+### Plasma apps — misc
+dnf5 install -y --setopt=install_weak_deps=False \
+    code \
+    pods \
+    kcalc \
+    flatseal \
+    spectacle \
+    pika-backup \
+    gnome-firmware \
     input-remapper
 
-### Install input methods (fcitx5)
+### Input methods (fcitx5)
 dnf5 install -y --setopt=install_weak_deps=False \
-    kcm-fcitx5 \
     fcitx5 \
     fcitx5-gtk \
     fcitx5-qt6 \
-    fcitx5-configtool \
+    kcm-fcitx5 \
     fcitx5-mozc \
-    fcitx5-chewing \
-    fcitx5-chinese-addons \
+    fcitx5-m17n \
+    fcitx5-rime \
     fcitx5-hangul \
     fcitx5-unikey \
-    fcitx5-m17n \
+    fcitx5-chewing \
     fcitx5-libthai \
+    fcitx5-configtool \
     fcitx5-table-extra \
-    fcitx5-rime
+    fcitx5-chinese-addons
 
 ### Enable system services
 systemctl enable plasmalogin.service
