@@ -16,15 +16,18 @@ XDG=(
 )
 
 PLASMA_BASE=(
+  kwin
   plasma-nm
   plasma-pa
   plasma-setup
   plasma-desktop
+  plasma-drkonqi
   plasma-keyboard
   plasma-workspace
   plasma-activities
   plasma-integration
   plasma-login-manager
+  kf6-qqc2-desktop-style
   plasma-lookandfeel-fedora
 )
 
