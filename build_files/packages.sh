@@ -19,7 +19,6 @@ PLASMA_SHELL=(
   kwin
   plasma-setup
   plasma-desktop
-  plasma-drkonqi
   plasma-keyboard
   plasma-workspace
   plasma-activities
