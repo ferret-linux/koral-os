@@ -35,6 +35,7 @@ window-inherit-working-directory = true
 # ── mouse & focus ────────────────────────
 focus-follows-mouse = true
 mouse-hide-while-typing = true
+right-click-action = context-menu
 
 # ── shell integration ────────────────────
 shell-integration = detect
@@ -48,9 +49,32 @@ scrollback-limit = 5500
 # ── notifications & confirmations ────────
 confirm-close-surface = false
 notify-on-command-finish = unfocused
+notify-on-command-finish-after = 10s
+notify-on-command-finish-action = bell,notify
 
 # ── rendering & updates ──────────────────
 auto-update = off
 scrollbar = system
 title-report = false
 window-vsync = false
+
+# ── links ────────────────────────────────
+link-url = true
+
+# ── accessibility & rendering ─────────────
+minimum-contrast = 1.1
+
+# ── bell ─────────────────────────────────
+bell-features = audio
+
+# ── quick terminal ───────────────────────
+quick-terminal-position = top
+quick-terminal-autohide = true
+keybind = ctrl+Backquote=toggle_quick_terminal
+
+# ── keybinds ─────────────────────────────
+keybind = ctrl+shift+f=start_search
+keybind = ctrl+shift+k=clear_screen
+keybind = ctrl+shift+d=close_surface
+keybind = ctrl+shift+p=toggle_command_palette
+keybind = ctrl+shift+u=copy_url_to_clipboard
