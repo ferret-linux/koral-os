@@ -1,37 +1,48 @@
 # ── window ───────────────────────────────
-title = Ghostty Terminal
+window-padding-balance = true
 window-decoration = client
 window-padding-x = 15
 window-padding-y = 10
-window-padding-balance = true
+title = Terminal
 
 # ── font ─────────────────────────────────
 font-family = Hack Nerd Font Mono
 font-size = 14
 
 # ── cursor ───────────────────────────────
-cursor-style = underline
-cursor-style-blink = false
 custom-shader = shader/animated_cursor.glsl
+cursor-style-blink = false
+cursor-style = underline
 
 # ── Theming ───────────────────────────────
 theme = light:zayu_light,dark:zayu_dark
-palette-generate = true
-window-theme = ghostty
 gtk-toolbar-style = raised-border
 gtk-titlebar-style = native
 gtk-tabs-location = bottom
+palette-harmonious = true
+palette-generate = true
+window-theme = ghostty
 gtk-wide-tabs = true
 
 # ── working directory ────────────────────
-working-directory = inherit
 window-inherit-working-directory = true
+split-inherit-working-directory = true
 tab-inherit-working-directory = true
+window-inherit-font-size = true
+working-directory = inherit
 
 # ── misc ─────────────────────────────────
-scrollbar = system
-scrollback-limit = 10000
-mouse-hide-while-typing = true
 shell-integration-features = no-cursor
+notify-on-command-finish = unfocused
+mouse-hide-while-typing = true
+confirm-close-surface = false
+cursor-click-to-move = true
+focus-follows-mouse = true
+shell-integration = detect
+scrollback-limit = 5500
 clipboard-read = allow
+copy-on-select = false
 window-vsync = false
+title-report = false
+scrollbar = system
+auto-update = off
