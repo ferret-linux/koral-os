@@ -6,7 +6,7 @@ set -euxo pipefail
 # they all get flattened into ONE dnf transaction below.
 # ---------------------------------------------------------------------------
 
-XDG=(
+XDG_PORTALS=(
   xdg-utils
   xdg-user-dirs
   xdg-user-dirs-gtk
@@ -15,10 +15,8 @@ XDG=(
   xdg-desktop-portal-kde
 )
 
-PLASMA_BASE=(
+PLASMA_SHELL=(
   kwin
-  plasma-nm
-  plasma-pa
   plasma-setup
   plasma-desktop
   plasma-drkonqi
@@ -27,85 +25,104 @@ PLASMA_BASE=(
   plasma-activities
   plasma-integration
   plasma-login-manager
+  kde-settings-plasma
   kf6-qqc2-desktop-style
   plasma-lookandfeel-fedora
 )
 
-KDE_BASE=(
+PLASMA_SESSION=(
   kscreen
   kunifiedpush
   kscreenlocker
-  kde-settings-plasma
   kwayland-integration
 )
 
-PLASMA_BASE_MISC=(
+HARDWARE_INTEGRATION=(
+  plasma-nm
+  plasma-pa
   bluedevil
   powerdevil
+  switcheroo-control
+  plasma-thunderbolt
+)
+
+SECURITY_AUTH=(
+  kwallet
+  polkit-kde
+  pam-kwallet
+  pinentry-qt
+  ksshaskpass
+  signon-kwallet-extension
+)
+
+KIO_PROTOCOLS=(
+  kdnssd
+  kio-fuse
+  kio-admin
+  kio-gdrive
+)
+
+NETWORK_VPN=(
+  ldns
+  plasma-firewall
+  plasma-nm-openvpn
+  plasma-nm-openconnect
+  plasma-firewall-firewalld
+)
+
+GTK_THEMING=(
+  kde-gtk-config
+  breeze-gtk-gtk3
+  breeze-gtk-gtk4
+)
+
+WINDOW_EFFECTS=(
+  plasma-wayland-protocols
+  kwin-effect-roundcorners
+)
+
+SEARCH_INDEXING=(
+  plasma-milou
+  kf6-baloo-file
+  kde-inotify-survey
+)
+
+ACCESSIBILITY=(
+  orca
+  espeak-ng
+  speech-dispatcher
+)
+
+THUMBNAILS_CODECS=(
   ffmpegthumbs
+  qt6-qtimageformats
+  kdegraphics-thumbnailers
 )
 
 KDE_ADDONS=(
   kdeplasma-addons
   kdenetwork-filesharing
-  kdegraphics-thumbnailers
-)
-
-PLASMA_ADDONS=(
-  plasma-vault
-  plasma-disks
-  plasma-nm-openvpn
-  plasma-nm-openconnect
-)
-
-SECURITY_MISC=(
-  kwallet
-  polkit-kde
-  pam-kwallet
-  pinentry-qt
-  switcheroo-control
-  signon-kwallet-extension
-)
-
-KDE_EXTRAS=(
-  kio-admin
-  kcm-plasmalogin
-  kcm-plasma-keyboard
-  kwin-effect-roundcorners
-)
-
-PLASMA_EXTRAS=(
-  plasma-print-manager
-)
-
-MISC_EXTRAS=(
-  ldns
-  kdnssd
-  nss-tools
-  colord-kde
-  flatpak-kcm
-  ksshaskpass
-  glibc-all-langpacks
-)
-
-PLASMA_OPTIONALS=(
-  plasma-milou
-  plasma-firewall
-  plasma-thunderbolt
-  plasma-wayland-protocols
-  plasma-firewall-firewalld
   plasma-browser-integration
 )
 
-KIO_OPTIONALS=(
-  kio-fuse
-  kio-gdrive
+STORAGE_DISKS=(
+  plasma-vault
+  plasma-disks
 )
 
-KDE_GTK_BREEZE=(
-  kde-gtk-config
-  breeze-gtk-gtk3
-  breeze-gtk-gtk4
+PRINTING=(
+  plasma-print-manager
+)
+
+LOCALIZATION_FONTS=(
+  adwaita-fonts-all
+  glibc-all-langpacks
+)
+
+KCM_MODULES=(
+  flatpak-kcm
+  kcm-plasmalogin
+  kcm-plasma-keyboard
 )
 
 REMOTE_ACCESS=(
@@ -114,14 +131,9 @@ REMOTE_ACCESS=(
   krdp
 )
 
-MISC_OPTIONALS=(
-  orca
-  espeak-ng
-  kf6-baloo-file
-  adwaita-fonts-all
-  speech-dispatcher
-  qt6-qtimageformats
-  kde-inotify-survey
+SYSTEM_MISC=(
+  nss-tools
+  colord-kde
 )
 
 GHOSTTY=(
@@ -144,8 +156,8 @@ PLASMA_APPS=(
 )
 
 KDE_APPS=(
-  kde-connect
   kinfocenter
+  kde-connect
   kde-partitionmanager
 )
 
@@ -189,21 +201,25 @@ FCITX5=(
 # dnf transaction. Order in the array doesn't matter to dnf's resolver.
 # ---------------------------------------------------------------------------
 ALL_PACKAGES=(
-  "${XDG[@]}"
-  "${PLASMA_BASE[@]}"
-  "${KDE_BASE[@]}"
-  "${PLASMA_BASE_MISC[@]}"
+  "${XDG_PORTALS[@]}"
+  "${PLASMA_SHELL[@]}"
+  "${PLASMA_SESSION[@]}"
+  "${HARDWARE_INTEGRATION[@]}"
+  "${SECURITY_AUTH[@]}"
+  "${KIO_PROTOCOLS[@]}"
+  "${NETWORK_VPN[@]}"
+  "${GTK_THEMING[@]}"
+  "${WINDOW_EFFECTS[@]}"
+  "${SEARCH_INDEXING[@]}"
+  "${ACCESSIBILITY[@]}"
+  "${THUMBNAILS_CODECS[@]}"
   "${KDE_ADDONS[@]}"
-  "${PLASMA_ADDONS[@]}"
-  "${SECURITY_MISC[@]}"
-  "${KDE_EXTRAS[@]}"
-  "${PLASMA_EXTRAS[@]}"
-  "${MISC_EXTRAS[@]}"
-  "${PLASMA_OPTIONALS[@]}"
-  "${KIO_OPTIONALS[@]}"
-  "${KDE_GTK_BREEZE[@]}"
+  "${STORAGE_DISKS[@]}"
+  "${PRINTING[@]}"
+  "${LOCALIZATION_FONTS[@]}"
+  "${KCM_MODULES[@]}"
   "${REMOTE_ACCESS[@]}"
-  "${MISC_OPTIONALS[@]}"
+  "${SYSTEM_MISC[@]}"
   "${GHOSTTY[@]}"
   "${PLASMA_APPS[@]}"
   "${KDE_APPS[@]}"
