@@ -12,9 +12,10 @@ font-family = Hack Nerd Font Mono
 # ── cursor ───────────────────────────────
 cursor-style = underline
 cursor-style-blink = false
+cursor-click-to-move = true
 custom-shader = shader/animated_cursor.glsl
 
-# ── Theming ───────────────────────────────
+# ── theming & gtk ────────────────────────
 gtk-wide-tabs = true
 window-theme = ghostty
 palette-generate = true
@@ -24,25 +25,32 @@ gtk-titlebar-style = native
 gtk-toolbar-style = raised-border
 theme = light:zayu_light,dark:zayu_dark
 
-# ── working directory ────────────────────
+# ── working directory & inheritance ──────
 working-directory = inherit
 window-inherit-font-size = true
 tab-inherit-working-directory = true
 split-inherit-working-directory = true
 window-inherit-working-directory = true
 
-# ── misc ─────────────────────────────────
+# ── mouse & focus ────────────────────────
+focus-follows-mouse = true
+mouse-hide-while-typing = true
+
+# ── shell integration ────────────────────
+shell-integration = detect
+shell-integration-features = no-cursor
+
+# ── clipboard & scrollback ───────────────
+clipboard-read = allow
+copy-on-select = false
+scrollback-limit = 5500
+
+# ── notifications & confirmations ────────
+confirm-close-surface = false
+notify-on-command-finish = unfocused
+
+# ── rendering & updates ──────────────────
 auto-update = off
 scrollbar = system
 title-report = false
 window-vsync = false
-copy-on-select = false
-clipboard-read = allow
-scrollback-limit = 5500
-shell-integration = detect
-focus-follows-mouse = true
-cursor-click-to-move = true
-confirm-close-surface = false
-mouse-hide-while-typing = true
-notify-on-command-finish = unfocused
-shell-integration-features = no-cursor
