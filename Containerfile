@@ -93,7 +93,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    bash /ctx/initrafs.sh
+    bash /ctx/initramfs.sh
 
 # ── Linting ──────────────────────────────────────────────────
 # Verify final image and contents are correct.
