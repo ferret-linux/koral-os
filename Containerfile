@@ -69,6 +69,12 @@ RUN dnf5 -y copr disable matinlotfali/KDE-Rounded-Corners && \
     dnf5 clean all && \
     dnf5 clean packages
 
+# ── Remove useless desktop files ────────────────────────────
+RUN rm -rf /usr/share/applications/input-remapper-gtk.desktop && \
+    rm -rf /usr/share/applications/virt-manager.desktop && \
+    rm -rf /usr/share/applications/btop.desktop && \
+    rm -rf /usr/share/applications/nvim.desktop
+
 # ── System files ─────────────────────────────────────────────
 COPY system_files/ /
 
