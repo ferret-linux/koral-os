@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=KDE Session Manager
-Exec=ksmserver
-NoDisplay=true
-DBusActivatable=true
-X-KDE-DBus-ServiceName=org.kde.ksmserver
