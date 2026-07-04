@@ -168,13 +168,10 @@ DOLPHIN_APPS=(
 
 MISC_APPS=(
   code
-  pods
   kcalc
   flatseal
   spectacle
   helium-drm
-  pika-backup
-  gnome-firmware
   input-remapper
 )
 
