@@ -44,6 +44,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     bash /ctx/packages.sh
 
+# ── Enable services ──────────────────────────────────────────
+RUN systemctl enable plasmalogin.service && \
+    systemctl enable plasma-setup.service && \
+    systemctl enable switcheroo-control.service
+
 # ── /opt → immutable tree migration ───────────────────────────
 # Move /opt contents into the immutable /usr tree, create
 # tmpfiles.d entries to symlink them back at runtime, then replace
@@ -69,7 +74,7 @@ RUN dnf5 -y copr disable matinlotfali/KDE-Rounded-Corners && \
     dnf5 clean all && \
     dnf5 clean packages
 
-# ── Remove useless desktop files ────────────────────────────
+# ── Remove unwanted desktop entries ───────────────────────────
 RUN rm -rf /usr/share/applications/input-remapper-gtk.desktop && \
     rm -rf /usr/share/applications/virt-manager.desktop && \
     rm -rf /usr/share/applications/btop.desktop && \

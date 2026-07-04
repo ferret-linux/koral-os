@@ -176,8 +176,3 @@ dnf5 install -y --setopt=install_weak_deps=False \
     fcitx5-configtool \
     fcitx5-table-extra \
     fcitx5-chinese-addons
-
-### Enable system services
-systemctl enable plasmalogin.service
-systemctl enable plasma-setup.service
-systemctl enable switcheroo-control.service
