@@ -1,178 +1,212 @@
 #!/bin/bash
+set -euxo pipefail
 
-set -ouex pipefail
+# ---------------------------------------------------------------------------
+# Package groups (arrays). Keep these separated/commented for readability;
+# they all get flattened into ONE dnf transaction below.
+# ---------------------------------------------------------------------------
 
-### Plasma base — xdg
-dnf5 install -y --setopt=install_weak_deps=False \
-    xdg-utils \
-    xdg-user-dirs \
-    xdg-user-dirs-gtk \
-    xdg-desktop-portal \
-    xdg-desktop-portal-gtk \
-    xdg-desktop-portal-kde
+XDG=(
+  xdg-utils
+  xdg-user-dirs
+  xdg-user-dirs-gtk
+  xdg-desktop-portal
+  xdg-desktop-portal-gtk
+  xdg-desktop-portal-kde
+)
 
-### Plasma base — plasma
-dnf5 install -y --setopt=install_weak_deps=False \
-    plasma-nm \
-    plasma-pa \
-    plasma-setup \
-    plasma-desktop \
-    plasma-keyboard \
-    plasma-workspace \
-    plasma-activities \
-    plasma-integration \
-    plasma-login-manager \
-    plasma-lookandfeel-fedora
+PLASMA_BASE=(
+  plasma-nm
+  plasma-pa
+  plasma-setup
+  plasma-desktop
+  plasma-keyboard
+  plasma-workspace
+  plasma-activities
+  plasma-integration
+  plasma-login-manager
+  plasma-lookandfeel-fedora
+)
 
-### Plasma base — kde/k
-dnf5 install -y --setopt=install_weak_deps=False \
-    kscreen \
-    kunifiedpush \
-    kscreenlocker \
-    kde-settings-plasma \
-    kwayland-integration
+KDE_BASE=(
+  kscreen
+  kunifiedpush
+  kscreenlocker
+  kde-settings-plasma
+  kwayland-integration
+)
 
-### Plasma base — misc
-dnf5 install -y --setopt=install_weak_deps=False \
-    bluedevil \
-    powerdevil \
-    ffmpegthumbs
+PLASMA_BASE_MISC=(
+  bluedevil
+  powerdevil
+  ffmpegthumbs
+)
 
-### Plasma addons — kde
-dnf5 install -y --setopt=install_weak_deps=False \
-    kdeplasma-addons \
-    kdenetwork-filesharing \
-    kdegraphics-thumbnailers
+KDE_ADDONS=(
+  kdeplasma-addons
+  kdenetwork-filesharing
+  kdegraphics-thumbnailers
+)
 
-### Plasma addons — plasma
-dnf5 install -y --setopt=install_weak_deps=False \
-    plasma-vault \
-    plasma-disks \
-    plasma-nm-openvpn \
-    plasma-nm-openconnect
+PLASMA_ADDONS=(
+  plasma-vault
+  plasma-disks
+  plasma-nm-openvpn
+  plasma-nm-openconnect
+)
 
-### Plasma addons — security/misc
-dnf5 install -y --setopt=install_weak_deps=False \
-    kwallet \
-    polkit-kde \
-    pam-kwallet \
-    pinentry-qt \
-    switcheroo-control \
-    signon-kwallet-extension
+SECURITY_MISC=(
+  kwallet
+  polkit-kde
+  pam-kwallet
+  pinentry-qt
+  switcheroo-control
+  signon-kwallet-extension
+)
 
-### Plasma extras — kde/k
-dnf5 install -y --setopt=install_weak_deps=False \
-    kio-admin \
-    kcm-plasmalogin \
-    kcm-plasma-keyboard \
-    kwin-effect-roundcorners
+KDE_EXTRAS=(
+  kio-admin
+  kcm-plasmalogin
+  kcm-plasma-keyboard
+  kwin-effect-roundcorners
+)
 
-### Plasma extras — plasma
-dnf5 install -y --setopt=install_weak_deps=False \
-    plasma-print-manager
+PLASMA_EXTRAS=(
+  plasma-print-manager
+)
 
-### Plasma extras — misc
-dnf5 install -y --setopt=install_weak_deps=False \
-    ldns \
-    kdnssd \
-    nss-tools \
-    colord-kde \
-    flatpak-kcm \
-    ksshaskpass \
-    glibc-all-langpacks
+MISC_EXTRAS=(
+  ldns
+  kdnssd
+  nss-tools
+  colord-kde
+  flatpak-kcm
+  ksshaskpass
+  glibc-all-langpacks
+)
 
-### Plasma optionals — plasma
-dnf5 install -y --setopt=install_weak_deps=False \
-    plasma-milou \
-    plasma-firewall \
-    plasma-thunderbolt \
-    plasma-wayland-protocols \
-    plasma-firewall-firewalld \
-    plasma-browser-integration
+PLASMA_OPTIONALS=(
+  plasma-milou
+  plasma-firewall
+  plasma-thunderbolt
+  plasma-wayland-protocols
+  plasma-firewall-firewalld
+  plasma-browser-integration
+)
 
-### Plasma optionals — kio
-dnf5 install -y --setopt=install_weak_deps=False \
-    kio-fuse \
-    kio-gdrive
+KIO_OPTIONALS=(
+  kio-fuse
+  kio-gdrive
+)
 
-### Plasma optionals — kde-gtk/breeze
-dnf5 install -y --setopt=install_weak_deps=False \
-    kde-gtk-config \
-    breeze-gtk-gtk3 \
-    breeze-gtk-gtk4
+KDE_GTK_BREEZE=(
+  kde-gtk-config
+  breeze-gtk-gtk3
+  breeze-gtk-gtk4
+)
 
-### Plasma optionals — remote access
-dnf5 install -y --setopt=install_weak_deps=False \
-    krdc \
-    krfb \
-    krdp
+REMOTE_ACCESS=(
+  krdc
+  krfb
+  krdp
+)
 
-### Plasma optionals — misc
-dnf5 install -y --setopt=install_weak_deps=False \
-    orca \
-    espeak-ng \
-    kf6-baloo-file \
-    adwaita-fonts-all \
-    speech-dispatcher \
-    qt6-qtimageformats \
-    kde-inotify-survey
+MISC_OPTIONALS=(
+  orca
+  espeak-ng
+  kf6-baloo-file
+  adwaita-fonts-all
+  speech-dispatcher
+  qt6-qtimageformats
+  kde-inotify-survey
+)
 
-### Ghostty terminal
-dnf5 install -y --setopt=install_weak_deps=False \
-    ghostty \
-    ghostty-kio \
-    ghostty-neovim \
-    ghostty-terminfo \
-    ghostty-bat-syntax \
-    ghostty-zsh-completion \
-    ghostty-shell-integration
+GHOSTTY=(
+  ghostty
+  ghostty-kio
+  ghostty-neovim
+  ghostty-terminfo
+  ghostty-bat-syntax
+  ghostty-zsh-completion
+  ghostty-shell-integration
+)
 
-### Plasma apps — plasma
-dnf5 install -y --setopt=install_weak_deps=False \
-    plasma-discover \
-    plasma-discover-kns \
-    plasma-systemmonitor \
-    plasma-systemsettings \
-    plasma-discover-flatpak \
-    plasma-discover-notifier
+PLASMA_APPS=(
+  plasma-discover
+  plasma-discover-kns
+  plasma-systemmonitor
+  plasma-systemsettings
+  plasma-discover-flatpak
+  plasma-discover-notifier
+)
 
-### Plasma apps — kde
-dnf5 install -y --setopt=install_weak_deps=False \
-    kde-connect \
-    kinfocenter \
-    kde-partitionmanager
+KDE_APPS=(
+  kde-connect
+  kinfocenter
+  kde-partitionmanager
+)
 
-### Plasma apps — dolphin
-dnf5 install -y --setopt=install_weak_deps=False \
-    ark \
-    dolphin \
-    dolphin-plugins
+DOLPHIN_APPS=(
+  ark
+  dolphin
+  dolphin-plugins
+)
 
-### Plasma apps — misc
-dnf5 install -y --setopt=install_weak_deps=False \
-    code \
-    pods \
-    kcalc \
-    flatseal \
-    spectacle \
-    helium-drm \
-    pika-backup \
-    gnome-firmware \
-    input-remapper
+MISC_APPS=(
+  code
+  pods
+  kcalc
+  flatseal
+  spectacle
+  helium-drm
+  pika-backup
+  gnome-firmware
+  input-remapper
+)
 
-### Input methods (fcitx5)
-dnf5 install -y --setopt=install_weak_deps=False \
-    fcitx5 \
-    fcitx5-gtk \
-    fcitx5-qt6 \
-    kcm-fcitx5 \
-    fcitx5-mozc \
-    fcitx5-m17n \
-    fcitx5-rime \
-    fcitx5-hangul \
-    fcitx5-unikey \
-    fcitx5-chewing \
-    fcitx5-libthai \
-    fcitx5-configtool \
-    fcitx5-table-extra \
-    fcitx5-chinese-addons
+FCITX5=(
+  fcitx5
+  fcitx5-gtk
+  fcitx5-qt6
+  kcm-fcitx5
+  fcitx5-mozc
+  fcitx5-m17n
+  fcitx5-rime
+  fcitx5-hangul
+  fcitx5-unikey
+  fcitx5-chewing
+  fcitx5-libthai
+  fcitx5-configtool
+  fcitx5-table-extra
+  fcitx5-chinese-addons
+)
+
+# ---------------------------------------------------------------------------
+# Flatten everything into one package list and install in a single
+# dnf transaction. Order in the array doesn't matter to dnf's resolver.
+# ---------------------------------------------------------------------------
+ALL_PACKAGES=(
+  "${XDG[@]}"
+  "${PLASMA_BASE[@]}"
+  "${KDE_BASE[@]}"
+  "${PLASMA_BASE_MISC[@]}"
+  "${KDE_ADDONS[@]}"
+  "${PLASMA_ADDONS[@]}"
+  "${SECURITY_MISC[@]}"
+  "${KDE_EXTRAS[@]}"
+  "${PLASMA_EXTRAS[@]}"
+  "${MISC_EXTRAS[@]}"
+  "${PLASMA_OPTIONALS[@]}"
+  "${KIO_OPTIONALS[@]}"
+  "${KDE_GTK_BREEZE[@]}"
+  "${REMOTE_ACCESS[@]}"
+  "${MISC_OPTIONALS[@]}"
+  "${GHOSTTY[@]}"
+  "${PLASMA_APPS[@]}"
+  "${KDE_APPS[@]}"
+  "${DOLPHIN_APPS[@]}"
+  "${MISC_APPS[@]}"
+  "${FCITX5[@]}"
+)
+
+dnf5 install -y --setopt=install_weak_deps=False "${ALL_PACKAGES[@]}"
