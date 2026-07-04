@@ -60,6 +60,9 @@ RUN dnf5 -y copr disable matinlotfali/KDE-Rounded-Corners && \
 # Copy system files
 COPY system_files/ /
 
+# Lock all packages (makes build easier)
+RUN dnf versionlock add $(rpm -qa --qf '%{NAME}\n') && rpm -qa | wc -l
+
 # Build InitRamFS
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
