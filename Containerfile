@@ -1,42 +1,53 @@
+# ==============================================================
+#  KoralOS container image build
+#  Base: ${BASE_IMAGE}
+# ==============================================================
+
 ARG BASE_IMAGE
 
-# Allow build scripts to be referenced without being copied into the final image
+# ── Build context ─────────────────────────────────────────────
+# Allow build scripts to be referenced without being copied into
+# the final image.
 FROM scratch AS ctx
 COPY build_files /
 
-# Base Image
+# ── Base image ───────────────────────────────────────────────
 FROM ${BASE_IMAGE}
 
 ARG IMAGE_NAME
 ARG IMAGE_VENDOR="ferret-linux"
 ARG IMAGE_TAG="latest"
 
-### OS Release
+# ── OS release metadata ─────────────────────────────────────────
 RUN sed -i 's/^NAME=.*/NAME="KoralOS"/' /usr/lib/os-release && \
     sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="KoralOS Linux"/' /usr/lib/os-release
 
-## Add Repos
+# ── Repositories ─────────────────────────────────────────────
 RUN dnf5 -y copr enable matinlotfali/KDE-Rounded-Corners && \
     dnf config-manager addrepo --from-repofile=https://ferretlinux.org/repo/ferret-pkgs.repo && \
     dnf config-manager setopt ferret-pkgs.enabled=1 && \
     dnf config-manager setopt ferret-pkgs.priority=90 && \
     dnf --refresh makecache && \
-    dnf upgrade --setopt=intall_weak_deps=false
+    dnf upgrade --setopt=install_weak_deps=false
 
-# Make /opt real dir before package install
+# Make /opt a real directory before package install (some packages
+# expect to write here directly).
 RUN rm -rf /opt && mkdir -p /opt
 
-### MODIFICATIONS
-## make modifications desired in your image and install packages by modifying the build.sh script
-## the following RUN directive does all the things required to run "build.sh" as recommended.
-
+# ── Package installation ─────────────────────────────────────
+# Make modifications desired in your image and install packages by
+# editing build_files/packages.sh — the RUN directive below executes
+# it with the recommended cache/tmpfs mounts.
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     bash /ctx/packages.sh
 
-# Move /opt contents to immutable tree, create tmpfiles.d entries, fix dirs
+# ── /opt → immutable tree migration ───────────────────────────
+# Move /opt contents into the immutable /usr tree, create
+# tmpfiles.d entries to symlink them back at runtime, then replace
+# /opt with a symlink into /var so it stays writable.
 RUN mkdir -p /usr/lib/opt && \
     mv /opt/* /usr/lib/opt/ 2>/dev/null || true && \
     for dir in /usr/lib/opt/*/; do \
@@ -48,7 +59,8 @@ RUN mkdir -p /usr/lib/opt && \
     mkdir -p /var/tmp && \
     chmod -R 1777 /var/tmp
 
-# Cleanup
+# ── Repository cleanup ───────────────────────────────────────
+# Remove build-only repos/coprs so they don't ship in the final image.
 RUN dnf5 -y copr disable matinlotfali/KDE-Rounded-Corners && \
     rm -rf /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:matinlotfali:KDE-Rounded-Corners.repo && \
     dnf config-manager setopt ferret-pkgs.enabled=0 && \
@@ -57,18 +69,21 @@ RUN dnf5 -y copr disable matinlotfali/KDE-Rounded-Corners && \
     dnf5 clean all && \
     dnf5 clean packages
 
-# Copy system files
+# ── System files ─────────────────────────────────────────────
 COPY system_files/ /
 
-# Lock all packages (makes build easier)
+# ── Package version lock ─────────────────────────────────────
+# Lock all installed packages to their current versions/releases,
+# making rebase/upgrade behavior deterministic for this image.
 RUN dnf versionlock add $(rpm -qa --qf '%{NAME}\n') && rpm -qa | wc -l
 
-# Build InitRamFS
+# ── InitRAMFS build ──────────────────────────────────────────
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     bash /ctx/initrafs.sh
-### LINTING
-## Verify final image and contents are correct.
+
+# ── Linting ──────────────────────────────────────────────────
+# Verify final image and contents are correct.
 RUN bootc container lint
