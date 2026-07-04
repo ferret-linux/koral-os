@@ -1,48 +1,48 @@
 # ── window ───────────────────────────────
-window-padding-balance = true
-window-decoration = client
+title = Terminal
 window-padding-x = 15
 window-padding-y = 10
-title = Terminal
+window-decoration = client
+window-padding-balance = true
 
 # ── font ─────────────────────────────────
-font-family = Hack Nerd Font Mono
 font-size = 14
+font-family = Hack Nerd Font Mono
 
 # ── cursor ───────────────────────────────
-custom-shader = shader/animated_cursor.glsl
-cursor-style-blink = false
 cursor-style = underline
+cursor-style-blink = false
+custom-shader = shader/animated_cursor.glsl
 
 # ── Theming ───────────────────────────────
-theme = light:zayu_light,dark:zayu_dark
-gtk-toolbar-style = raised-border
-gtk-titlebar-style = native
-gtk-tabs-location = bottom
-palette-harmonious = true
-palette-generate = true
-window-theme = ghostty
 gtk-wide-tabs = true
+window-theme = ghostty
+palette-generate = true
+palette-harmonious = true
+gtk-tabs-location = bottom
+gtk-titlebar-style = native
+gtk-toolbar-style = raised-border
+theme = light:zayu_light,dark:zayu_dark
 
 # ── working directory ────────────────────
-window-inherit-working-directory = true
-split-inherit-working-directory = true
-tab-inherit-working-directory = true
-window-inherit-font-size = true
 working-directory = inherit
+window-inherit-font-size = true
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
+window-inherit-working-directory = true
 
 # ── misc ─────────────────────────────────
-shell-integration-features = no-cursor
-notify-on-command-finish = unfocused
-mouse-hide-while-typing = true
-confirm-close-surface = false
-cursor-click-to-move = true
-focus-follows-mouse = true
-shell-integration = detect
-scrollback-limit = 5500
-clipboard-read = allow
-copy-on-select = false
-window-vsync = false
-title-report = false
-scrollbar = system
 auto-update = off
+scrollbar = system
+title-report = false
+window-vsync = false
+copy-on-select = false
+clipboard-read = allow
+scrollback-limit = 5500
+shell-integration = detect
+focus-follows-mouse = true
+cursor-click-to-move = true
+confirm-close-surface = false
+mouse-hide-while-typing = true
+notify-on-command-finish = unfocused
+shell-integration-features = no-cursor
