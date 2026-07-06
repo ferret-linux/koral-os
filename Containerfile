@@ -44,6 +44,13 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     bash /ctx/packages.sh
 
+# ── Package version lock ─────────────────────────────────────
+# Lock all installed packages to their current versions/releases,
+# making rebase/upgrade behavior deterministic for this image.
+# (dnf5 writes this to /etc/dnf/versionlock.toml — part of the
+# committed OS tree, not /var — so it persists correctly.)
+RUN dnf versionlock add $(rpm -qa --qf '%{NAME}\n')
+
 # ── Enable services ──────────────────────────────────────────
 RUN systemctl enable plasmalogin.service && \
     systemctl enable plasma-setup.service && \
