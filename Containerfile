@@ -83,10 +83,10 @@ RUN rm -rf /usr/share/applications/input-remapper-gtk.desktop && \
 # ── System files ─────────────────────────────────────────────
 COPY system_files/ /
 
-# ── Package version lock ─────────────────────────────────────
-# Lock all installed packages to their current versions/releases,
-# making rebase/upgrade behavior deterministic for this image.
-RUN dnf versionlock add $(rpm -qa --qf '%{NAME}\n') && rpm -qa | wc -l
+# ── Installed package count ──────────────────────────────────
+# Just a quick sanity check/log of how many packages ended up
+# in the image — no version locking applied.
+RUN echo "📦 Total installed packages: $(rpm -qa | wc -l)"
 
 # ── InitRAMFS build ──────────────────────────────────────────
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
