@@ -6,54 +6,6 @@ set -euxo pipefail
 # they all get flattened into ONE dnf transaction below.
 # ---------------------------------------------------------------------------
 
-XDG_PORTALS=(
-  xdg-utils
-  xdg-user-dirs
-  xdg-user-dirs-gtk
-  xdg-desktop-portal
-  xdg-desktop-portal-gtk
-  xdg-desktop-portal-kde
-)
-
-PLASMA_SHELL=(
-  kwin
-  plasma-setup
-  plasma-desktop
-  plasma-keyboard
-  plasma-workspace
-  plasma-activities
-  plasma-integration
-  plasma-login-manager
-  kde-settings-plasma
-  kf6-qqc2-desktop-style
-  plasma-lookandfeel-fedora
-)
-
-PLASMA_SESSION=(
-  kscreen
-  kunifiedpush
-  kscreenlocker
-  kwayland-integration
-)
-
-HARDWARE_INTEGRATION=(
-  plasma-nm
-  plasma-pa
-  bluedevil
-  powerdevil
-  switcheroo-control
-  plasma-thunderbolt
-)
-
-SECURITY_AUTH=(
-  kwallet
-  polkit-kde
-  pam-kwallet
-  pinentry-qt
-  ksshaskpass
-  signon-kwallet-extension
-)
-
 KIO_PROTOCOLS=(
   kdnssd
   kio-fuse
@@ -135,14 +87,13 @@ SYSTEM_MISC=(
   colord-kde
 )
 
-GHOSTTY=(
-  ghostty
+# GHOSTTY extras not already installed by mx-setup.sh
+# (mx installs: ghostty, ghostty-zsh-completion, ghostty-shell-integration)
+GHOSTTY_EXTRAS=(
   ghostty-kio
   ghostty-neovim
   ghostty-terminfo
   ghostty-bat-syntax
-  ghostty-zsh-completion
-  ghostty-shell-integration
 )
 
 PLASMA_APPS=(
@@ -160,14 +111,7 @@ KDE_APPS=(
   kde-partitionmanager
 )
 
-DOLPHIN_APPS=(
-  ark
-  dolphin
-  dolphin-plugins
-)
-
 MISC_APPS=(
-  code
   kcalc
   flatseal
   spectacle
@@ -197,11 +141,6 @@ FCITX5=(
 # dnf transaction. Order in the array doesn't matter to dnf's resolver.
 # ---------------------------------------------------------------------------
 ALL_PACKAGES=(
-  "${XDG_PORTALS[@]}"
-  "${PLASMA_SHELL[@]}"
-  "${PLASMA_SESSION[@]}"
-  "${HARDWARE_INTEGRATION[@]}"
-  "${SECURITY_AUTH[@]}"
   "${KIO_PROTOCOLS[@]}"
   "${NETWORK_VPN[@]}"
   "${GTK_THEMING[@]}"
@@ -216,10 +155,9 @@ ALL_PACKAGES=(
   "${KCM_MODULES[@]}"
   "${REMOTE_ACCESS[@]}"
   "${SYSTEM_MISC[@]}"
-  "${GHOSTTY[@]}"
+  "${GHOSTTY_EXTRAS[@]}"
   "${PLASMA_APPS[@]}"
   "${KDE_APPS[@]}"
-  "${DOLPHIN_APPS[@]}"
   "${MISC_APPS[@]}"
   "${FCITX5[@]}"
 )
