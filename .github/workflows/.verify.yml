@@ -22,7 +22,15 @@ jobs:
       matrix:
         include:
           - image_name: koral-os
+          - image_name: koral-os-mx
+          - image_name: koral-os-gx
+          - image_name: koral-os-dx
+          - image_name: koral-os-vx
           - image_name: koral-os-nvidia
+          - image_name: koral-os-mx-nvidia
+          - image_name: koral-os-gx-nvidia
+          - image_name: koral-os-dx-nvidia
+          - image_name: koral-os-vx-nvidia
 
     steps:
       - name: Checkout
