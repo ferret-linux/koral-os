@@ -52,8 +52,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 RUN dnf versionlock add $(rpm -qa --qf '%{NAME}\n')
 
 # ── Enable services ──────────────────────────────────────────
-RUN systemctl enable plasmalogin.service && \
-    systemctl enable plasma-setup.service && \
+RUN systemctl enable plasmalogin.service  || true & \
+    systemctl enable plasma-setup.service || true && \
     systemctl enable switcheroo-control.service
 
 # ── /opt → immutable tree migration ───────────────────────────
