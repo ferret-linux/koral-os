@@ -23,8 +23,24 @@ jobs:
         include:
           - image_name: koral-os
             base_image: ghcr.io/ferret-linux/mink-os:latest
+          - image_name: koral-os-mx
+            base_image: ghcr.io/ferret-linux/mink-os-mx:latest
+          - image_name: koral-os-gx
+            base_image: ghcr.io/ferret-linux/mink-os-gx:latest
+          - image_name: koral-os-dx
+            base_image: ghcr.io/ferret-linux/mink-os-dx:latest
+          - image_name: koral-os-vx
+            base_image: ghcr.io/ferret-linux/mink-os-vx:latest
           - image_name: koral-os-nvidia
             base_image: ghcr.io/ferret-linux/mink-os-nvidia:latest
+          - image_name: koral-os-mx-nvidia
+            base_image: ghcr.io/ferret-linux/mink-os-mx-nvidia:latest
+          - image_name: koral-os-dx-nvidia
+            base_image: ghcr.io/ferret-linux/mink-os-dx-nvidia:latest
+          - image_name: koral-os-gx-nvidia
+            base_image: ghcr.io/ferret-linux/mink-os-gx-nvidia:latest
+          - image_name: koral-os-vx-nvidia
+            base_image: ghcr.io/ferret-linux/mink-os-vx-nvidia:latest
 
     steps:
       - name: Free Disk Space
