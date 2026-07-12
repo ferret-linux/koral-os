@@ -54,7 +54,7 @@ RUN dnf versionlock add $(rpm -qa --qf '%{NAME}\n')
 # ── Enable services ──────────────────────────────────────────
 RUN systemctl enable plasmalogin.service  || true & \
     systemctl enable plasma-setup.service || true && \
-    systemctl enable switcheroo-control.service
+    systemctl enable switcheroo-control.service || true
 
 # ── /opt → immutable tree migration ───────────────────────────
 # Move /opt contents into the immutable /usr tree, create
