@@ -17,6 +17,7 @@ FROM ${BASE_IMAGE}
 ARG IMAGE_NAME
 ARG IMAGE_VENDOR="ferret-linux"
 ARG IMAGE_TAG="latest"
+ENV IMAGE_NAME=${IMAGE_NAME}
 
 # ── OS release metadata ─────────────────────────────────────────
 RUN sed -i 's/^NAME=.*/NAME="KoralOS"/' /usr/lib/os-release && \
@@ -35,14 +36,55 @@ RUN dnf5 -y copr enable matinlotfali/KDE-Rounded-Corners && \
 RUN rm -rf /opt && mkdir -p /opt
 
 # ── Package installation ─────────────────────────────────────
-# Make modifications desired in your image and install packages by
-# editing build_files/packages.sh — the RUN directive below executes
-# it with the recommended cache/tmpfs mounts.
+# build_files/ is split per flavor (mx, essentials, dx, gx, vx), same
+# convention as mink-os/RubinOS/NorixOS. Layer the matching scripts
+# using the IMAGE_NAME suffix:
+#   mx          -> ALL variants (core Plasma desktop)
+#   essentials  -> all variants EXCEPT *-mx / *-mx-nvidia
+#   dx          -> *-dx / *-dx-nvidia / *-vx / *-vx-nvidia (vx = dx + vx)
+#   gx          -> *-gx / *-gx-nvidia only
+#   vx          -> *-vx / *-vx-nvidia only (layered on top of dx)
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    bash /ctx/packages.sh
+    bash /ctx/mx-setup.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    case "${IMAGE_NAME}" in \
+        *-mx|*-mx-nvidia) : ;; \
+        *) bash /ctx/essentials.sh ;; \
+    esac
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    case "${IMAGE_NAME}" in \
+        *-dx|*-dx-*|*-vx|*-vx-*) bash /ctx/dx-setup.sh ;; \
+        *) : ;; \
+    esac
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    case "${IMAGE_NAME}" in \
+        *-gx|*-gx-*) bash /ctx/gx-setup.sh ;; \
+        *) : ;; \
+    esac
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    case "${IMAGE_NAME}" in \
+        *-vx|*-vx-*) bash /ctx/vx-setup.sh ;; \
+        *) : ;; \
+    esac
 
 # ── Package version lock ─────────────────────────────────────
 # Lock all installed packages to their current versions/releases,
@@ -88,6 +130,9 @@ RUN rm -rf /usr/share/applications/input-remapper-gtk.desktop && \
     rm -rf /usr/share/applications/nvim.desktop
 
 # ── System files ─────────────────────────────────────────────
+# Unlike RubinOS/NorixOS, system_files/ here is a single shared tree
+# (not split per variant) — same overlay applies to every image, so
+# a flat COPY is correct and no case-statement layering is needed.
 COPY system_files/ /
 
 # ── Installed package count ──────────────────────────────────
