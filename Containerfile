@@ -28,6 +28,7 @@ RUN dnf5 -y copr enable matinlotfali/KDE-Rounded-Corners && \
     dnf config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-multimedia.repo && \
     dnf config-manager addrepo --from-repofile=https://ferretlinux.org/repo/ferret-pkgs.repo && \
     dnf config-manager setopt ferret-pkgs.enabled=1 && \
+    dnf config-manager setopt fedora-multimedia.enabled=1 && \
     dnf config-manager setopt fedora-multimedia.priority=80 && \
     dnf config-manager setopt ferret-pkgs.priority=90 && \
     dnf --refresh makecache && \
