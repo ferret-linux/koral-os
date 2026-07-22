@@ -11,6 +11,7 @@ GAME_LAUNCHERS=(
   steam-devices
   retroarch
   protonplus
+  input-remapper
   heroic-games-launcher
 )
 

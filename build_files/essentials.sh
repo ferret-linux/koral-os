@@ -116,7 +116,6 @@ MISC_APPS=(
   flatseal
   spectacle
   helium-drm
-  input-remapper
 )
 
 FCITX5=(
