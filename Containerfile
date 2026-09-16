@@ -19,6 +19,10 @@ ARG IMAGE_VENDOR="ferret-linux"
 ARG IMAGE_TAG="latest"
 ENV IMAGE_NAME=${IMAGE_NAME}
 
+# Make /opt a real directory before package install (some packages
+# expect to write here directly).
+RUN rm -rf /opt && mkdir -p /opt
+
 # ── OS release metadata ─────────────────────────────────────────
 RUN sed -i 's/^NAME=.*/NAME="KoralOS"/' /usr/lib/os-release && \
     sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="KoralOS Linux"/' /usr/lib/os-release
@@ -102,16 +106,19 @@ RUN systemctl enable plasmalogin.service  || true && \
          systemctl enable switcheroo-control.service || true
 
 # ── /opt → immutable tree migration ───────────────────────────
-# Move /opt contents into the immutable /usr tree, create
-# tmpfiles.d entries to symlink them back at runtime, then replace
-# /opt with a symlink into /var so it stays writable.
+# Move /opt contents into the immutable /usr tree and create
+# tmpfiles.d entries to symlink them back at runtime.
 RUN mkdir -p /usr/lib/opt && \
     mv /opt/* /usr/lib/opt/ 2>/dev/null || true && \
     for dir in /usr/lib/opt/*/; do \
         opt=$(basename "$dir"); \
         echo "L+?  \"/opt/${opt}\"  -  -  -  -  /usr/lib/opt/${opt}" > /usr/lib/tmpfiles.d/99-optfix-${opt}.conf; \
-    done && \
-    rm -rf /opt && ln -s /var/opt /opt && \
+    done
+
+# ── Directory fixes ──────────────────────────────────────────
+# Replace /opt with a symlink into /var so it stays writable, and
+# ensure other runtime-required directories exist with correct perms.
+RUN rm -rf /opt && ln -s /var/opt /opt && \
     mkdir -p /var/roothome && \
     mkdir -p /var/tmp && \
     chmod -R 1777 /var/tmp
