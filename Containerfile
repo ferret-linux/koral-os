@@ -30,13 +30,12 @@ RUN sed -i 's/^NAME=.*/NAME="KoralOS"/' /usr/lib/os-release && \
 # ── Repositories ─────────────────────────────────────────────
 RUN dnf5 -y copr enable matinlotfali/KDE-Rounded-Corners && \
     dnf config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-multimedia.repo && \
-    dnf config-manager addrepo --from-repofile=https://ferretlinux.org/repo/ferret-pkgs.repo && \
+    dnf config-manager addrepo --from-repofile=https://ferret-linux.github.io/repo/ferret-pkgs.repo && \
     dnf config-manager setopt ferret-pkgs.enabled=1 && \
     dnf config-manager setopt fedora-multimedia.enabled=1 && \
     dnf config-manager setopt fedora-multimedia.priority=80 && \
     dnf config-manager setopt ferret-pkgs.priority=90 && \
-    dnf --refresh makecache && \
-    dnf upgrade --setopt=install_weak_deps=false
+    dnf --refresh makecache
 
 # Make /opt a real directory before package install (some packages
 # expect to write here directly).
