@@ -122,7 +122,10 @@ FCITX5=(
   fcitx5
   fcitx5-gtk
   fcitx5-qt6
-  kcm-fcitx5
+  # kcm-fcitx5 is currently uninstallable in Fedora 45: it is built against
+  # Plasma 7 (libPlasma.so.7) while the distro ships libplasma 6.8
+  # (libPlasma.so.6). Re-add once Fedora rebases it. fcitx5-configtool
+  # below still provides the configuration UI.
   fcitx5-mozc
   fcitx5-m17n
   fcitx5-rime
