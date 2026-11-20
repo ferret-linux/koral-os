@@ -11,7 +11,6 @@ EDITORS_IDE=(
 )
 
 CONTAINER_TOOLING=(
-  pods
   podman
   buildah
 )
