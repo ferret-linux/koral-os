@@ -115,7 +115,7 @@ MISC_APPS=(
   kcalc
   flatseal
   spectacle
-  helium-drm
+  zen-browser
 )
 
 FCITX5=(
