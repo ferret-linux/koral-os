@@ -56,8 +56,6 @@ SECURITY_AUTH=(
 
 GHOSTTY=(
   ghostty
-  ghostty-zsh-completion
-  ghostty-shell-integration
 )
 
 DOLPHIN_APPS=(

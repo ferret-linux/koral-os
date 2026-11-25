@@ -87,15 +87,6 @@ SYSTEM_MISC=(
   colord-kde
 )
 
-# GHOSTTY extras not already installed by mx-setup.sh
-# (mx installs: ghostty, ghostty-zsh-completion, ghostty-shell-integration)
-GHOSTTY_EXTRAS=(
-  ghostty-kio
-  ghostty-neovim
-  ghostty-terminfo
-  ghostty-bat-syntax
-)
-
 PLASMA_APPS=(
   plasma-discover
   plasma-discover-kns
@@ -157,7 +148,6 @@ ALL_PACKAGES=(
   "${KCM_MODULES[@]}"
   "${REMOTE_ACCESS[@]}"
   "${SYSTEM_MISC[@]}"
-  "${GHOSTTY_EXTRAS[@]}"
   "${PLASMA_APPS[@]}"
   "${KDE_APPS[@]}"
   "${MISC_APPS[@]}"
